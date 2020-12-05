@@ -1,4 +1,5 @@
 # VueJS-HTML-Boilerplate
 
-* Used the latest VueJS 3.x version 👉  https://unpkg.com/vue@next
-* Used the System Font stack 👉  https://css-tricks.com/snippets/css/system-font-stack/
+* No NodeJS, webpack and compiling needed.
+* Uses the latest VueJS 3.x version 👉  https://unpkg.com/vue@next
+* Uses the System Font stack 👉  https://www.digitalocean.com/community/tutorials/css-system-font-stack
