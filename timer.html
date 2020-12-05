@@ -20,12 +20,22 @@
             Pause Seconds: <input v-model.number="intervalPauseMinutes" type="number">
         </section>
         <hr>
-        <section class="timer">
+        <section>
             <ul>
                 <li>Minutes: {{intervalMinutes}} mins</li>
                 <li>Pause: {{intervalPauseMinutes}} mins</li>
             </ul>
             Duration: {{durationMins}} mins
+            <button @click="timerActive = !timerActive">Toggle Timer</button>
+        </section>
+        <hr>
+        <section class="timer">
+            Timer Active: {{timerActive}}
+            <ul>
+                <li v-for="repetition in repetitions">
+                    {{repetition}} <span v-show="activeInterval == repetition">Active</span>
+                </li>
+            </ul>
         </section>
     </div>
 

@@ -5,12 +5,19 @@ const VueApp = {
             repetitions: 1,
             intervalMinutes: 1,
             intervalPauseMinutes: 0.5,
+            timerActive: false,
         }
     },
     computed: {
         durationMins() {
-            console.log(this.repetitions)
             return this.repetitions * (this.intervalMinutes + this.intervalPauseMinutes)
+        },
+        activeInterval() {
+            if (this.timerActive) {
+                return 1
+            } else {
+                return 0
+            }
         }
     }
 }
