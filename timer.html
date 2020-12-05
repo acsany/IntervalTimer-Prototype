@@ -15,22 +15,22 @@
         <section>
             Repetitions: <input v-model.number="repetitions" type="number">
             <hr>
-            Interval Minutes: <input v-model.number="intervalMinutes" type="number">
-            <hr>
-            Pause Seconds: <input v-model.number="intervalPauseMinutes" type="number">
+            Interval Seconds: <input v-model.number="intervalSeconds" type="number">
         </section>
         <hr>
         <section>
             <ul>
-                <li>Minutes: {{intervalMinutes}} mins</li>
-                <li>Pause: {{intervalPauseMinutes}} mins</li>
+                <li>Seconds: {{intervalSeconds}}s</li>
             </ul>
             Duration: {{durationMins}} mins
+            <button v-if="!timerActive" @click="startTimer">Start Timer</button>
+            <button v-if="timerActive" @click="resetTimer">Reset Timer</button>
             <button @click="timerActive = !timerActive">Toggle Timer</button>
         </section>
         <hr>
         <section class="timer">
             Timer Active: {{timerActive}}
+            Total Countdown:  | {{totalTimerCount}}
             <ul>
                 <li v-for="repetition in repetitions">
                     {{repetition}} <span v-show="activeInterval == repetition">Active</span>
