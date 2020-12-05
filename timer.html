@@ -4,14 +4,29 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>VueJS App</title>
+    <title>Interval Timer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@braid/vue-formulate@2.4.5/dist/snow.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
     <div id="app">
-        <h1>{{message}}</h1>
-        <code>VueJS Version: {{vueVersion}}</code>
+        <h1>Interval Timer</h1>
+        <section>
+            Repetitions: <input v-model.number="repetitions" type="number">
+            <hr>
+            Interval Minutes: <input v-model.number="intervalMinutes" type="number">
+            <hr>
+            Pause Seconds: <input v-model.number="intervalPauseMinutes" type="number">
+        </section>
+        <hr>
+        <section class="timer">
+            <ul>
+                <li>Minutes: {{intervalMinutes}} mins</li>
+                <li>Pause: {{intervalPauseMinutes}} mins</li>
+            </ul>
+            Duration: {{durationMins}} mins
+        </section>
     </div>
 
     <script src="https://unpkg.com/vue@next"></script>

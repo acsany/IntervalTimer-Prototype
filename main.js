@@ -2,12 +2,15 @@ const VueApp = {
     el: '#app',
     data() {
         return {
-            message: 'Hello World 🐶',
+            repetitions: 1,
+            intervalMinutes: 1,
+            intervalPauseMinutes: 0.5,
         }
     },
     computed: {
-        vueVersion() {
-            return Vue.version
+        durationMins() {
+            console.log(this.repetitions)
+            return this.repetitions * (this.intervalMinutes + this.intervalPauseMinutes)
         }
     }
 }
