@@ -22,7 +22,7 @@
             <ul>
                 <li>Seconds: {{intervalSeconds}}s</li>
             </ul>
-            Duration: {{durationMins}} mins
+            Duration: {{durationSeconds}}s
             <button v-if="!timerActive" @click="startTimer">Start Timer</button>
             <button v-if="timerActive" @click="resetTimer">Reset Timer</button>
             <button @click="timerActive = !timerActive">Toggle Timer</button>
@@ -30,7 +30,10 @@
         <hr>
         <section class="timer">
             Timer Active: {{timerActive}}
-            Total Countdown:  | {{totalTimerCount}}
+            Total Countdown: {{intervalTimerCount}} | {{totalTimerCount}}
+            Current Interval: {{activeInterval}}
+            Timer complete: {{timerComplete}}
+
             <ul>
                 <li v-for="repetition in repetitions">
                     {{repetition}} <span v-show="activeInterval == repetition">Active</span>
