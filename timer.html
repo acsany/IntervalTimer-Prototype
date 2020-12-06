@@ -23,9 +23,13 @@
                 <li>Seconds: {{intervalSeconds}}s</li>
             </ul>
             Duration: {{durationSeconds}}s
-            <button v-if="!timerActive" @click="startTimer">Start Timer</button>
-            <button v-if="timerActive" @click="resetTimer">Reset Timer</button>
-            <button v-if="!timerComplete" @click="toggleTimer">Toggle Timer</button>
+            <button v-if="!timerActive && totalTimerCount == 0" @click="startTimer">Start Timer</button>
+            <template v-if="totalTimerCount > 0" >
+                <button @click="resetTimer">Reset Timer</button>
+                <button v-if="timerActive" @click="toggleTimer">Pause Timer</button>
+                <button v-if="!timerActive" @click="toggleTimer">Resume Timer</button>
+
+            </template>
         </section>
         <hr>
         <section class="timer">
