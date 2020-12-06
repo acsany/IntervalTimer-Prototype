@@ -8,7 +8,8 @@ const VueApp = {
             currentInterval: 0,
             totalTimerCount: 0,
             intervalTimerCount: 0,
-            timerComplete: false
+            timerComplete: false,
+            intervalID: undefined
         }
     },
     computed: {
@@ -32,43 +33,44 @@ const VueApp = {
             this.timerComplete = false
             this.timerActive = true
             this.totalTimerCount = this.durationSeconds
-            this.intervalTimerCount = this.intervalSeconds
-            this.currentInterval = 1
+            this.newInterval()
+            this.countdown()
         },
         resetTimer() {
             console.log("... Timer reset.")
-            this.timerComplete = false
             this.timerActive = false
-            this.totalTimerCount = this.durationSeconds
             this.currentInterval = 0
+            this.totalTimerCount = 0
+            this.intervalTimerCount = 0
+            clearInterval(this.intervalID)
         },
-    },
-    watch: {
-        totalTimerCount: {
-            handler(value) {
-                if (value > 0 && this.timerActive) {
-                    //this.currentCountdown = duration
-                    setTimeout(() => {
-                        this.totalTimerCount--;
-                        if (this.totalTimerCount == 0) {
-                            this.resetTimer()
-                            this.timerComplete = true
-                        }
-                    }, 1000);
-                }
+        toggleTimer() {
+            this.timerActive = !this.timerActive
+            if (!this.timerActive) {
+                clearInterval(this.intervalID)
+            } else {
+                this.countdown()
             }
         },
-        intervalTimerCount: {
-            handler(value) {
-                if (value > 0 && this.timerActive) {
-                    setTimeout(() => {
-                        this.intervalTimerCount--;
-                        if (this.intervalTimerCount == 0) {
-                            this.intervalTimerCount = this.intervalSeconds
-                            this.currentInterval++
-                        }
-                    }, 1000);
-                }
+        newInterval() {
+            this.intervalTimerCount = this.intervalSeconds
+            this.currentInterval++
+        },
+        countdown() {
+            if (this.totalTimerCount > 0 && this.timerActive) {
+                this.intervalID = setInterval(() => {
+                    this.totalTimerCount--
+                    this.intervalTimerCount--
+
+                    if (this.totalTimerCount == 0) {
+                        this.resetTimer()
+                        this.timerComplete = true
+                    }
+
+                    if (this.intervalTimerCount == 0 && !this.timerComplete) {
+                        this.newInterval()
+                    }
+                }, 1000);
             }
         }
     }
