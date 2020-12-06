@@ -55,6 +55,7 @@ const VueApp = {
         newInterval() {
             this.intervalTimerCount = this.intervalSeconds
             this.currentInterval++
+            new Audio("assets/notification_high-intensity.wav").play();
         },
         countdown() {
             if (this.totalTimerCount > 0 && this.timerActive) {
@@ -65,6 +66,10 @@ const VueApp = {
                     if (this.totalTimerCount == 0) {
                         this.resetTimer()
                         this.timerComplete = true
+                        // Doubled for simple increase of volume
+                        new Audio("assets/hero_decorative-celebration-01.wav").play();
+                        new Audio("assets/hero_decorative-celebration-01.wav").play();
+
                     }
 
                     if (this.intervalTimerCount == 0 && !this.timerComplete) {

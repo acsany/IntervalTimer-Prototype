@@ -5,46 +5,107 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Interval Timer</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@braid/vue-formulate@2.4.5/dist/snow.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-    <div id="app">
-        <h1>Interval Timer</h1>
+    <div id="app" class="container">
+        <header>
+            <h1>Interval Timer</h1>
+            <p>A simple timer. Perfect for workouts or baking pancakes.</p>
+        </header>
+        <main>
+            <form>
+                <fieldset class="ui-border">
+                    <legend>Sets</legend>
+                    <input
+                        name="repetitions"
+                        v-model.number="repetitions"
+                        type="number"
+                        min="1"
+                        max="99"
+                        class="ui-border"
+                    >
+                    <label class="right" for="repetitions">×</label>
+                </fieldset>
+                <fieldset class="ui-border">
+                    <legend>Interval</legend>
+                    <input
+                        name="intervalDuration"
+                        v-model.number="intervalSeconds"
+                        type="number"
+                        min="1"
+                        max="999"
+                        class="ui-border"
+                    >
+                    <label class="right" for="intervalDuration">seconds</label>
+                </fieldset>
+            </form>
+            <p>
+                <small>Total duration: {{durationSeconds}}s</small>
+            </p>
+        </main>
         <section>
-            Repetitions: <input v-model.number="repetitions" type="number">
-            <hr>
-            Interval Seconds: <input v-model.number="intervalSeconds" type="number">
-        </section>
-        <hr>
-        <section>
-            <ul>
-                <li>Seconds: {{intervalSeconds}}s</li>
-            </ul>
-            Duration: {{durationSeconds}}s
-            <button v-if="!timerActive && totalTimerCount == 0" @click="startTimer">Start Timer</button>
-            <template v-if="totalTimerCount > 0" >
-                <button @click="resetTimer">Reset Timer</button>
-                <button v-if="timerActive" @click="toggleTimer">Pause Timer</button>
-                <button v-if="!timerActive" @click="toggleTimer">Resume Timer</button>
+            <button
+                v-if="!timerActive && totalTimerCount == 0"
+                @click="startTimer"
+                class="ui-border"
+            >
+                Start {{repetitions}}×{{intervalSeconds}}s  Timer
+            </button>
+            <template v-if="totalTimerCount > 0">
+                <button @click="resetTimer" class="ui-border">
+                    Reset Timer
+                </button>
+                <button v-if="timerActive" @click="toggleTimer" class="ui-border">
+                    Pause Timer
+                </button>
+                <button v-if="!timerActive" @click="toggleTimer" class="ui-border">
+                    Resume Timer
+                </button>
 
             </template>
         </section>
-        <hr>
-        <section class="timer">
-            Timer Active: {{timerActive}}
-            Total Countdown: {{intervalTimerCount}} | {{totalTimerCount}}
-            Current Interval: {{activeInterval}}
-            Timer complete: {{timerComplete}}
-            <hr>
-            ID: {{intervalID}}
+        <section
+            class="timer"
+            v-show="timerActive"
+        >
+            <p class="ui-center">{{activeInterval}} of {{repetitions}} Sets</p>
+            <p class="ui-super-jumbo">
+                {{intervalTimerCount}}s
+            </p>
+            <p class="ui-jumbo">{{totalTimerCount}}/{{durationSeconds}}s</p>
+            <p class="ui-center">
+                <template v-for="repetition in repetitions">
+                    <span v-if="repetition == activeInterval">✹</span>
+                    <span v-else>◉</span>
+                </template>
+            </p>
 
-            <ul>
-                <li v-for="repetition in repetitions">
-                    {{repetition}} <span v-show="currentInterval == repetition">Active</span>
-                </li>
-            </ul>
+            <template v-if="totalTimerCount > 0">
+                <button @click="resetTimer" class="ui-border">
+                    Reset Timer
+                </button>
+                <button v-if="timerActive" @click="toggleTimer" class="ui-border">
+                    Pause Timer
+                </button>
+                <button v-if="!timerActive" @click="toggleTimer" class="ui-border">
+                    Resume Timer
+                </button>
+
+            </template>
+        </section>
+        <section class="timer" v-show="timerComplete">
+
+            <p class="ui-jumbo">
+                🎉<br>
+                {{repetitions}}/{{repetitions}} sets in {{durationSeconds}} seconds done!
+            </p>
+
+            <button @click="resetTimer;timerComplete = !timerComplete" class="ui-border">
+                Reset Timer
+            </button>
         </section>
     </div>
 
