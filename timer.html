@@ -25,7 +25,6 @@
             Duration: {{durationSeconds}}s
             <button v-if="!timerActive" @click="startTimer">Start Timer</button>
             <button v-if="timerActive" @click="resetTimer">Reset Timer</button>
-            <button @click="timerActive = !timerActive">Toggle Timer</button>
         </section>
         <hr>
         <section class="timer">
